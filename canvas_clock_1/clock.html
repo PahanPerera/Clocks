@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
+
+    <title>CLOCK</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+	<link href="css/custom.css" rel="stylesheet">
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+	
+	<link href="css/custom2.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+	<script>
+					function loadTime(){
+						  
+							var c1 = document.getElementById('canvas1');
+							var co1 = c1.getContext('2d');
+							var c2 = document.getElementById('canvas2');
+							var co2 = c2.getContext('2d');
+							var c3 = document.getElementById('canvas3');
+							var co3 = c3.getContext('2d');
+							
+							
+							setInterval(function(){
+								var d = new Date();
+								drawchart(co3,d.getSeconds(),'#00b9e1','s');
+								drawchart(co2,d.getMinutes(),'#00b9e1','m');
+								drawchart(co1,d.getHours(),'#00b9e1','h');
+							}, 1000);
+							
+					}
+
+					 function p2a( p){
+							var a = (p/60)*360;
+							a = a-90;
+							return ((a/360)*2)-0.00001;
+					 }
+
+					 function drawchart(context,val,colour,type){
+					  
+						  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+						  
+						  var x = context.canvas.width / 2;
+						  var y = context.canvas.height / 2;
+						  var radius = 100;
+						  context.lineWidth = 10;
+						  var counterClockwise = false;
+						  
+						  var startAngle = 1.5 * Math.PI;
+						  var endAngle = 1.49999 * Math.PI;
+						  context.beginPath();
+						  context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+
+						  context.strokeStyle = '#e5e5e5';
+						  context.stroke();
+
+						  var startAngle = 1.5* Math.PI;
+						  var endAngle = p2a(val)* Math.PI;
+						  context.beginPath();
+						  context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+						  context.strokeStyle = colour;
+						  context.stroke();
+						  
+						  context.font="96px Didact Gothic";
+						  context.fillStyle = '#333333';
+						  if(type == 's'){
+							context.fillStyle = '#e5e5e5';
+						  }
+						  context.textAlign = 'center';
+						  context.textBaseline = 'middle';
+						  
+						  if(val < 10){
+							val = "0"+val;
+						  }
+						  context.fillText(val, x, y);
+
+					  }
+					  
+	</script>
+  </head>
+
+  <body onload="loadTime()">
+
+    <div class="container">
+      <div class="header">
+        <h3 class="text-muted">CLOCK</h3>
+      </div>
+
+	  <!-- <div class="alert alert-danger"></span>Please enter a correct url</div> -->
+	  
+      <div class="jumbotron">
+	  <table>
+	  <tr>
+		  <td>
+			<div class="chart">
+				<canvas id="canvas1" height="250px" width="240px;"></canvas>
+			</div>
+			</td>
+		  <script>
+			  
+		   </script>
+		  <td>
+			<div class="chart">
+				<canvas id="canvas2" height="250px" width="240px;">
+				</canvas>
+			</div>
+		  </td>
+		  <td>
+			<div class="chart">
+				<canvas id="canvas3" height="250px" width="240px;">
+				</canvas>
+			</div>
+		  </td>
+	  </tr>
+	  </table>
+      </div>
+      <div class="footer">
+        <p><a href="http://ipahan.blogspot.com">Pahan M. Perera</a></p>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>
